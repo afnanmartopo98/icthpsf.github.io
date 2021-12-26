@@ -8,12 +8,10 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	
 	$koneksi = new mysqli("localhost","root","","inventori");
 	
-	if(empty($_SESSION['admin'])){
+if(empty($_SESSION['login_user'])){
     
     header("location:login.php");
   }
-	
-
 
 
 	
@@ -34,7 +32,7 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Inventory Barang</title>
+  <title>Inventori ICT HPSF</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -59,11 +57,11 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index3.php">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-building"></i>
         </div>
-        <div class="sidebar-brand-text mx-2">PT. HABLUN CITRAMAS PERSADA</div>
+        <div class="sidebar-brand-text mx-2">INVENTORI HPSF</div>
       </a>
 
 	  <!-- Divider -->
@@ -71,8 +69,8 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	  
 
  <?php
-   if ($_SESSION['admin']) {
-	   $user = $_SESSION['admin'];
+   if ($_SESSION['login_user']) {
+	   $user = $_SESSION['login_user'];
    }
    $sql =$koneksi->query("select * from users where id='$user'");
    $data = $sql->fetch_assoc();
@@ -84,14 +82,13 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     <li class="d-flex align-items-center justify-content-center">
         <a class="nav-link">
-		 <img src="img/<?php echo $data['foto']?>" class="img-circle" width="80" alt="User"/></a>
+		 <img src="img/HPSF.png" class="img-circle" width="80" alt="User"/></a>
 		  <li class="d-flex align-items-center justify-content-center">
 		  </li>
 	  </li>
-		 <li class="nav-item ">
+		<li class="nav-item ">
         <a class="nav-link">
-         	<div class="d-flex align-items-center justify-content-center" class="name">  <?php echo  $data['nama'];?></div></font>
-			<div class="d-flex align-items-center justify-content-center" class="email">Anda adalah <?php echo $data['level'];?></div>
+         	<div class="d-flex align-items-center justify-content-center" class="name"><?php echo  $data['nama'];?></div></font>
 		 </a>
       </li>
 	
@@ -100,7 +97,7 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="?page=home">
+        <a class="nav-link" href="?page=home3">
           <i class="fas fa-fw fa-home"></i>
           <span>Home</span></a>
       </li>
@@ -119,22 +116,22 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	    <li class="nav-item active">
         <a class="nav-link" href="?page=pengguna">
           <i class="fas fa-fw fa-home"></i>
-          <span>Data Pengguna</span></a>
+          <span>Data Staff</span></a>
       </li>
 	  
 	  
 	   <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseData" aria-expanded="true" aria-controls="collapseData">
           <i class="fas fa-fw fa-folder"></i>
-          <span>Data Master</span>
+          <span>Senarai Alat ganti</span>
         </a>
         <div id="collapseData" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menu:</h6>
-            <a class="collapse-item" href="?page=gudang">Data Barang</a>
-            <a class="collapse-item" href="?page=jenisbarang">Jenis Barang</a>
-            <a class="collapse-item" href="?page=satuanbarang">Satuan Barang</a>
-			 <a class="collapse-item" href="?page=supplier">Data Supplier</a>
+            <a class="collapse-item" href="?page=gudang">Data Alat Ganti</a>
+            <a class="collapse-item" href="?page=jenisbarang">Kategori Alat ganti</a>
+            <!--<a class="collapse-item" href="?page=satuanbarang">Satuan Barang</a>
+			 <a class="collapse-item" href="?page=supplier">Data Supplier</a>-->
            
           </div>
         </div>
@@ -145,13 +142,13 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 	    <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>Transaksi</span>
+          <span>Masuk / Keluar</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menu:</h6>
-            <a class="collapse-item" href="?page=barangmasuk">Barang Masuk</a>
-            <a class="collapse-item" href="?page=barangkeluar">Barang Keluar</a>
+            <a class="collapse-item" href="?page=barangmasuk">Item Masuk</a>
+            <a class="collapse-item" href="?page=barangkeluar">Item Keluar</a>
            
            
           </div>
@@ -164,6 +161,7 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
       <div class="sidebar-heading">
         Laporan
       </div>
+
 	  
 	  
       
@@ -175,13 +173,15 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         <div id="collapseLaporan" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Menu Laporan:</h6>
-            <a class="collapse-item" href="?page=laporan_supplier">Laporan Supplier</a>
-            <a class="collapse-item" href="?page=laporan_gudang">Laporan Stok Gudang</a>
-			 <a class="collapse-item" href="?page=laporan_barangmasuk">Laporan Barang Masuk</a>
-            <a class="collapse-item" href="?page=laporan_barangkeluar">Laporan Barang Keluar</a> 
+            <a class="collapse-item" href="?page=laporan_barangmasuk">Laporan Item Masuk</a>
+            <a class="collapse-item" href="?page=laporan_gudang">Laporan Stok Alat Ganti</a>
+            <a class="collapse-item" href="?page=laporan_barangkeluar">Laporan Item Keluar</a> 
           </div>
         </div>
       </li>
+     
+
+
 	  
 	  
 	  
@@ -210,7 +210,50 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             <i class="fa fa-bars"></i>
           </button>
 
-         
+
+                        <?php
+        include "koneksibarang.php";
+
+                        $sql_get = mysqli_query($koneksi,"SELECT * FROM gudang WHERE jumlah='8' and noti=0 ");
+
+                        $count = mysqli_num_rows($sql_get);
+
+                        ?>
+
+                        <div style="margin-right: -550px;" class="search-box pull-right">
+                            <form action="#">
+                                <div  class="dropdown show">
+  <a   class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i style="font-size:28px;color: blue;left: 6px;top: 10px;" class="fa">&#xf0f3;</i> <span class="badge badge-primary" id="count"><?php echo $count; ?></span>
+  </a>
+
+  <div style="width: 300px;" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+    
+<?php
+    $sql_get1 = mysqli_query($koneksi,"SELECT * FROM gudang WHERE jumlah='8' and noti=0");
+    if(mysqli_num_rows($sql_get1)>0)
+    {
+        while ($result = mysqli_fetch_assoc($sql_get1)) 
+        {
+            echo '<a style="font-size:14px;float:right;" class"dropdown-item text-primary" href="?page=gudang&<?php'.$result['id'].'?>">tempahan : '.$result['kode_barang'].' / '.$result['jumlah'].'</a>';
+            echo '<div class="dropdown-divider"></div>';
+        }
+    }
+        else
+        {
+
+            echo '<a class="dropdown-item text-danger font-weight-hold-bold" href="#"><i class="fas fa-frown-open"></i> Maaf tiada Pesanan! </a>';
+
+        }
+    
+?>
+   
+    
+  </div>
+</div>
+
+                            </form>
+                        </div>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -222,8 +265,9 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			 <div class="top-menu">
         <ul class="nav pull-right top-menu">
 		
-  
-		      <li><a onclick="return confirm('Apakah anda yakin akan logout?')" class="btn btn-danger" class="logout" href="logout.php">Logout</a></li>
+
+
+           <li><a onclick="return confirm('Apakah anda yakin akan log Keluar?')" class="btn btn-danger" class="logout" href="logout.php">Log Keluar</a></li>
         </ul>
       </div>
              
@@ -247,11 +291,21 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			   
 			   	if ($page == "pengguna") {
 				   if ($aksi == "") {
-					   include "page/pengguna/pengguna2.php";
+					   include "page/pengguna/pengguna.php";
 				   }
-				    if ($aksi == "tambahpengguna2") {
-					   include "page/pengguna/tambahpengguna2.php";
-					}
+				    if ($aksi == "tambahpengguna") {
+					   include "page/pengguna/tambahpengguna.php";
+				   }
+				    if ($aksi == "ubahpengguna") {
+					   include "page/pengguna/ubahpengguna.php";
+				   }
+				   
+				    if ($aksi == "hapuspengguna") {
+					   include "page/pengguna/hapuspengguna.php";
+				   }
+				   if ($aksi == "change-password") {
+					   include "page/pengguna/change-password.php";
+				   }
 			   }
 			   
 			   
@@ -277,15 +331,12 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 					   include "page/jenisbarang/jenisbarang.php";
 				   }
 				    if ($aksi == "tambahjenis") {
-					   include "page//jenisbarang/tambahjenis.php";
+					   include "page/jenisbarang/tambahjenis.php";
 				   }
-				    if ($aksi == "ubahsupplier") {
-					   include "page/supplier/ubahsupplier.php";
+				   if ($aksi == "ubahbarang") {
+					   include "page/jenisbarang/ubahbarang.php";
 				   }
 				   
-				    if ($aksi == "hapussupplier") {
-					   include "page/supplier/hapussupplier.php";
-				   }
 			   }
 			   
 			     if ($page == "satuanbarang") {
@@ -293,14 +344,14 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 					   include "page/satuanbarang/satuan.php";
 				   }
 				    if ($aksi == "tambahsatuan") {
-					   include "page//satuanbarang/tambahsatuan.php";
+					   include "page/satuanbarang/tambahsatuan.php";
 				   }
-				    if ($aksi == "ubahsatuan") {
-					   include "page/satuanbarang/ubahsatuan.php";
+				    if ($aksi == "ubahsupplier") {
+					   include "page/supplier/ubahsupplier.php";
 				   }
 				   
-				    if ($aksi == "hapussatuan") {
-					   include "page/satuanbarang/hapussatuan.php";
+				    if ($aksi == "hapussupplier") {
+					   include "page/supplier/hapussupplier.php";
 				   }
 			   }
 	
@@ -383,10 +434,10 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 			   
 			     
 			   if ($page == "") {
-				   include "home.php";
+				   include "home3.php";
 			   }
-			   if ($page == "home") {
-				   include "home.php";
+			   if ($page == "home3") {
+				   include "home3.php";
 			   }
 			   ?>
     
@@ -398,14 +449,7 @@ mysqli_report (MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
       <!-- End of Main Content -->
   
    <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019 | Repost by <a href='https://stokcoding.com/' title='StokCoding.com' target='_blank'>StokCoding.com</a>
-            </span>
-          </div>
-        </div>
-      </footer>
+      
       <!-- End of Footer -->
 
     </div>
